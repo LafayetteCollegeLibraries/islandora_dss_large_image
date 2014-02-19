@@ -29,37 +29,56 @@
         <?php print $islandora_content; ?>
       </div>
     <?php endif; ?>
-  <div class="islandora-large-image-sidebar">
-    <?php if (!empty($dc_array['dc:description']['value'])): ?>
-      <h2><?php print $dc_array['dc:description']['label']; ?></h2>
-      <p><?php print $dc_array['dc:description']['value']; ?></p>
-    <?php endif; ?>
-    <?php if ($parent_collections): ?>
-      <div>
-        <h2><?php print t('In collections'); ?></h2>
-        <ul>
-          <?php foreach ($parent_collections as $collection): ?>
-        <li><?php print l($collection->label, "islandora/object/{$collection->id}"); ?></li>
-          <?php endforeach; ?>
-        </ul>
-      </div>
-    <?php endif; ?>
-  </div>
   </div>
   <fieldset class="collapsible collapsed islandora-large-image-metadata">
-  <legend><span class="fieldset-legend"><?php print t('Details'); ?></span></legend>
+  <h3 class="islandora-image-details">Details</h3>
     <div class="fieldset-wrapper">
       <dl class="islandora-inline-metadata islandora-large-image-fields">
         <?php $row_field = 0; ?>
-        <?php foreach($dc_array as $key => $value): ?>
-          <dt class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-            <?php print $value['label']; ?>
-          </dt>
-          <dd class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
-            <?php print $value['value']; ?>
-          </dd>
+
+        <?php if (isset($mods_object)): ?>
+
+          <?php foreach ($mods_object as $key => $value): ?>
+
+            <dt class="<?php
+print $value['class'];
+print $row_field == 0 ? ' first' : '';
+if($value['label'] != ''):
+
+  print ' islandora-inline-metadata-displayed';
+endif;
+?>">
+
+              <?php print $value['label']; ?>
+            </dt>
+            <dd class="<?php print $value['class']; ?><?php print $row_field == 0 ? ' first' : ''; ?>">
+
+              <?php if(array_key_exists('date_value', $value)): ?>
+
+	        <?php print array_key_exists('facet', $value) ? l($value['date_value'], "islandora/search/*:*", array('query' => array('f[0]' => $value['facet'] . ':' . $value['facet_value'] . ''
+																       ))) : $value['date_value']; ?>
+	      <?php else: ?>
+
+                <?php
+
+		    // print array_key_exists('facet', $value) ? l($value['value'], "islandora/search/eastasia." . $value['facet'] . "%3A" . $value['facet_value']) : $value['value'];
+		    if(array_key_exists('facet', $value)) {
+
+		      //print l($value['value'], "islandora/search/*:*?f[0]=" . $value['facet'] . ':' . $value['facet_value'] . '');
+		      print l($value['value'], "islandora/search/*:*", array('query' => array('f[0]' => $value['facet'] . ':' . $value['facet_value'] . '')));
+		    } elseif(array_key_exists('href', $value)) {
+
+                      print l($value['value'], $value['href']);
+		    } else {
+
+		      print $value['value'];
+		    }
+		?>
+	      <?php endif; ?>
+            </dd>
           <?php $row_field++; ?>
         <?php endforeach; ?>
+        <?php endif; ?>
       </dl>
     </div>
   </fieldset>

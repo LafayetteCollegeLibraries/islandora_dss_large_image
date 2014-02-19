@@ -1,5 +1,13 @@
 <?php
 
+  /**
+   * @file Core functionality for the book solution pack
+   * @author griffinj@lafayette.edu
+   *
+   */
+
+  //require_once dirname(__FILE__) . '/theme/theme.inc';
+
 /**
  * Implements hook_CMODEL_PID_islandora_object_ingested().
  *
@@ -10,3 +18,13 @@ function islandora_dss_large_image_islandora_sp_large_image_cmodel_islandora_obj
 
   dpm($object);
   }
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function islandora_dss_large_image_theme_registry_alter(&$theme_registry) {
+
+  dpm(array_keys($theme_registry));
+
+  $theme_registry['islandora_large_image']['template'] = drupal_get_path('module', 'islandora_dss_large_image') . '/theme/islandora-large-image';
+}
