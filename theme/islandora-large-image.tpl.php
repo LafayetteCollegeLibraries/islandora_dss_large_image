@@ -31,7 +31,7 @@
     <?php endif; ?>
   </div>
   <fieldset class="collapsible collapsed islandora-large-image-metadata">
-  <h3 class="islandora-image-details">Details</h3>
+  <h3 class="islandora-image-details">Item Details</h3>
     <div class="fieldset-wrapper">
       <dl class="islandora-inline-metadata islandora-large-image-fields">
         <?php $row_field = 0; ?>
@@ -55,8 +55,10 @@ endif;
 
               <?php if(array_key_exists('date_value', $value)): ?>
 
-	        <?php print array_key_exists('facet', $value) ? l($value['date_value'], "islandora/search/*:*", array('query' => array('f[0]' => $value['facet'] . ':' . $value['facet_value'] . ''
-																       ))) : $value['date_value']; ?>
+	        <?php
+		    //print array_key_exists('facet', $value) ? l($value['date_value'], "islandora/search/*:*", array('query' => array('f[0]' => $value['facet'] . ':' . $value['facet_value'] . ''))) : $value['date_value'];
+		    print $value['facet_href'];
+                ?>
 	      <?php else: ?>
 
                 <?php
@@ -65,7 +67,8 @@ endif;
 		    if(array_key_exists('facet', $value)) {
 
 		      //print l($value['value'], "islandora/search/*:*?f[0]=" . $value['facet'] . ':' . $value['facet_value'] . '');
-		      print l($value['value'], "islandora/search/*:*", array('query' => array('f[0]' => $value['facet'] . ':' . $value['facet_value'] . '')));
+		      //print l($value['value'], "islandora/search/*:*", array('query' => array('f[0]' => $value['facet'] . ':' . $value['facet_value'] . '')));
+		      print $value['facet_href'];
 		    } elseif(array_key_exists('href', $value)) {
 
                       print l($value['value'], $value['href']);
