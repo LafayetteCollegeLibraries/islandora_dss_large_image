@@ -23,11 +23,6 @@ function islandora_dss_large_image_process_islandora_large_image(array &$variabl
 							      'content' => $base_url . '/' . drupal_get_path_alias()),
 				       );
 
-  $meta_element_open_graph_url = array('#type' => 'html_tag',
-				       '#tag' => 'meta',
-				       '#attributes' => array('property' =>  'og:url',
-							      'content' => $base_url . '/' . drupal_get_path_alias()),
-				       );
   $meta_element_open_graph_author = array('#type' => 'html_tag',
 					  '#tag' => 'meta',
 					  '#attributes' => array('property' =>  'og:author',
@@ -50,7 +45,7 @@ function islandora_dss_large_image_process_islandora_large_image(array &$variabl
   $meta_elements['meta_element_open_graph_image'] = array('#type' => 'html_tag',
 							  '#tag' => 'meta',
 							  '#attributes' => array('property' =>  'og:image',
-										 'content' => $base_url . '/' . current_path() . '/datastream/TN/view',
+										 'content' => $base_url . '/' . current_path() . '/datastream/JPG/view',
 										 ),
 				
 							  );
@@ -63,10 +58,16 @@ function islandora_dss_large_image_process_islandora_large_image(array &$variabl
     }
   }
 
+  $meta_elements['meta_element_open_graph_description'] = array('#type' => 'html_tag',
+								'#tag' => 'meta',
+								'#attributes' => array('property' =>  'og:description',
+										       'content' => $collection,
+										       )
+								);
   $meta_elements['meta_element_open_graph_site_name'] = array('#type' => 'html_tag',
 							      '#tag' => 'meta',
 							      '#attributes' => array('property' =>  'og:site_name',
-										     'content' => $collection,
+										     'content' => 'Digital Scholarship Services',
 										     )
 							      );
 
@@ -75,14 +76,4 @@ function islandora_dss_large_image_process_islandora_large_image(array &$variabl
     // Add header meta tag for IE to head
     drupal_add_html_head($meta_element, $key);
   }
-
-  $meta_ie_render_engine = array('#type' => 'html_tag',
-				 '#tag' => 'meta',
-				 '#attributes' => array('property' =>  'og:image',
-							'content' => $base_url . '/' . current_path() . '/datastream/JPG/view',
-							)
-				 );
- 
-  // Add header meta tag for IE to head
-  drupal_add_html_head($meta_ie_render_engine, 'meta_ie_render_engine');
-}
+  }
