@@ -11,7 +11,13 @@ require_once dirname(__FILE__) . '/theme/theme.inc';
 /**
  * Implements hook_theme_registry_alter().
  */
+
+/**
+ * This has been migrated into the theme bootstrap_dss_digital
+ * @todo Resolve issues for overriding templates within multiple Modules
+ *
+ */
 function islandora_dss_large_image_theme_registry_alter(&$theme_registry) {
 
-  $theme_registry['islandora_large_image']['template'] = drupal_get_path('module', 'islandora_dss_large_image') . '/theme/islandora-large-image';
+  //$theme_registry['islandora_large_image']['template'] = drupal_get_path('module', 'islandora_dss_large_image') . '/theme/islandora-large-image';
 }

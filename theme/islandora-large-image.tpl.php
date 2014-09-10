@@ -20,6 +20,8 @@
  * @see template_preprocess_islandora_large_image()
  * @see theme_islandora_large_image()
  */
+
+dpm('trace2');
 ?>
 
 <div class="islandora-large-image-object islandora">

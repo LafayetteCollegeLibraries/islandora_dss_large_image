@@ -8,7 +8,7 @@
 
 function islandora_dss_large_image_process_islandora_large_image(array &$variables) {
 
-  $islandora_object = $variables['islandora_object'];
+  $object = $variables['islandora_object'];
 
   global $base_url;
   $meta_element_open_graph_type = array('#type' => 'html_tag',
@@ -32,7 +32,7 @@ function islandora_dss_large_image_process_islandora_large_image(array &$variabl
   $meta_element_open_graph_title = array('#type' => 'html_tag',
 					 '#tag' => 'meta',
 					 '#attributes' => array('property' =>  'og:title',
-								'content' => $islandora_object->label,
+								'content' => $object->label,
 								)
 					 );
   // For all <meta> elements
@@ -50,12 +50,20 @@ function islandora_dss_large_image_process_islandora_large_image(array &$variabl
 				
 							  );
 
+  // Retrieve the collection from a Solr Field
+  // @todo Refactor and abstract for the admin. interface
   foreach($variables['mods_object'] as $mods_element) {
 
     if(array_key_exists('facet', $mods_element) and $mods_element['facet'] == 'cdm.Relation.IsPartOf') {
 
       $collection = $mods_element['value'];
     }
+  }
+
+  // If the Solr Field cannot be captured, simply use the PID of the parent collection
+  if(!isset($collection)) {
+
+    $collection = array_shift($object->getParents());
   }
 
   $meta_elements['meta_element_open_graph_description'] = array('#type' => 'html_tag',
